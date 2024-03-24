@@ -1,6 +1,7 @@
 const resolve = require("@rollup/plugin-node-resolve");
 const typescript = require("@rollup/plugin-typescript");
 const commonjs = require("@rollup/plugin-commonjs");
+const terser = require("@rollup/plugin-terser");
 
 module.exports = [
   {
@@ -9,8 +10,14 @@ module.exports = [
       dir: "dist",
       format: "cjs",
       entryFileNames: "[name].cjs.js",
+      sourcemap: true,
     },
-    plugins: [resolve(), commonjs(), typescript()],
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript(),
+      terser({ mangle: { toplevel: true } }),
+    ],
   },
   {
     input: "./src/index.ts",
@@ -18,7 +25,13 @@ module.exports = [
       dir: "dist",
       format: "esm",
       entryFileNames: "[name].esm.js",
+      sourcemap: true,
     },
-    plugins: [resolve(), commonjs(), typescript()],
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript(),
+      terser({ mangle: { toplevel: true } }),
+    ],
   },
 ];
